@@ -40,3 +40,89 @@
 .read-the-docs {
   color: #888;
 }
+
+/* new */
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f0f0f0;
+}
+
+.container {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  color: #333;
+  text-align: center;
+}
+
+#currentSong {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+#albumArt {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+#playbackControls,
+#volumeControl,
+#bluetoothButton {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-around;
+}
+
+button {
+  padding: 10px;
+  cursor: pointer;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  flex: 1;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+#volumeLevel {
+  font-weight: bold;
+  margin-left: 5px;
+}
+
+#bluetoothDeviceList {
+  list-style: none;
+  padding: 0;
+}
+
+#bluetoothDeviceList li {
+  margin-bottom: 10px;
+}
+
+#connectButton,
+#disconnectButton,
+#backButton {
+  background-color: #4285f4;
+}
+
+#connectButton:hover,
+#disconnectButton:hover,
+#backButton:hover {
+  background-color: #357ae8;
+}
+
+#connectedDevice {
+  font-weight: bold;
+  color: #4285f4;
+}

@@ -9,6 +9,54 @@ const port = 5001
 // Middleware for parsing req bodies to JSON (req.body)
 app.use(express.json());
 
+// Load initial data from data.json
+let data;
+
+
+async function loadData() {
+  try {
+      const fileContent = await fsp.readFile('data.json', 'utf8');
+      data = JSON.parse(fileContent);
+  } catch (error) {
+      console.error('Error reading data.json:', error.message);
+      data = {
+          volume: 50,
+          bluetooth: {
+              devices: [
+                  { id: 'device1', name: 'Device 1' },
+                  { id: 'device2', name: 'Device 2' },
+                  { id: 'device3', name: 'Device 3' }
+              ],
+              connected: null
+          },
+          playlist: [
+              { id: 1, title: 'Song 1' },
+              { id: 2, title: 'Song 2' },
+              { id: 3, title: 'Song 3' },
+              { id: 4, title: 'Song 4' },
+              { id: 5, title: 'Song 5' }
+          ]
+      };
+      saveData();
+  }
+}
+
+// Save data to data.json
+async function saveData() {
+  try {
+      await fsp.writeFile('data.json', JSON.stringify(data, null, 2), 'utf8');
+  } catch (error) {
+      console.error('Error writing to data.json:', error.message);
+  }
+}
+
+// Load initial data
+loadData();
+
+
+// Endpoints 
+
+// /api/volume
 app.get('/api/volume', (req, res, next) => {
   fsp.readFile('data1.json')
     .then((data) => {
@@ -41,38 +89,43 @@ app.put('/api/volume', (req, res) => {
       });
 });
 
+
+// /api/bluetooth
+app.get('/api/bluetooth', (req, res) => {
+  res.json({ devices: data.bluetooth.devices });
+});
+
+// /api/bluetooth/connected
+app.route('/api/bluetooth/connected')
+    .get((req, res) => {
+        res.json({ connected: data.bluetooth.connected });
+    })
+    .put((req, res) => {
+        const { deviceId } = req.body;
+        if (data.bluetooth.devices.some(device => device.id === deviceId)) {
+            data.bluetooth.connected = deviceId;
+            saveData();
+            res.json({ message: 'Connected device updated successfully' });
+        } else {
+            res.status(400).json({ error: 'Device not found' });
+        }
+    });
+    
+// /api/playlist
+app.get('/api/playlist', (req, res) => {
+  const { next } = req.query;
+  const startIndex = next ? parseInt(next, 10) : 0;
+  const songs = data.playlist.slice(startIndex, startIndex + 5);
+  res.json({ playlist: songs });
+});
+
+
 /*/ Path params
 app.get('/api/songs/:id', (req, res) => {
   res.send(req.params.id);
 });
 */
-app.post('/api/connectBluetooth', (req, res) => {
-  const { deviceName } = req.body;
 
-  if (deviceName) {
-      const selectedDevice = knownDevices.find(device => device.name === deviceName);
-
-      if (selectedDevice) {
-          // Simulate a successful Bluetooth connection 
-          console.log(`Connecting to Bluetooth device: ${selectedDevice.name} (${selectedDevice.address})`);
-
-          //Bluetooth connection logic
-          const btSerial = new bluetooth.BluetoothSerialPort();
-
-          btSerial.connect(selectedDevice.address, 1, () => {
-              console.log('Bluetooth connected');
-              btSerial.close();
-          });
-
-          //Send a success message
-          res.json({ status: 'Bluetooth connected', device: selectedDevice });
-      } else {
-          res.status(404).json({ error: 'Bluetooth device not found.' });
-      }
-  } else {
-      res.status(400).json({ error: 'Device name is required for Bluetooth connection.' });
-  }
-});
 
 const logError = (err, req, res, next) => {
   console.error(err);
@@ -91,24 +144,10 @@ app.use(logError);
 app.use(handleError);
 
 
-
-
-
-/*
-app.get('/api', (req, res) => {
-  res.send('Hello World!')
-})*/
-
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
-})
+});
 
 
-/*/Bluetooth connection
-const bluetooth = require('bluetooth-serial-port'); // Install it using: npm install bluetooth-serial-port
 
-
-app.use(express.json());
-
-*/
 

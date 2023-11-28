@@ -4,10 +4,65 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React</title>
+    <title></title>
   </head>
   <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Audio Playback App</title>
+      <link rel="stylesheet" href="App.css">
+  </head>
+  <body>
+  
+  <!-- Audio Playback Screen -->
+  <div id="audioPlaybackScreen">
+      <h2>Audio Playback Screen</h2>
+      
+      <!-- Display Current Song Information -->
+      <div id="currentSong">
+          <h3>Title: <span id="songTitle">Song Title</span></h3>
+          <p>Artist: <span id="artist">Artist Name</span></p>
+          <img id="albumArt" src="album-art.jpg" alt="Album Art">
+      </div>
+  
+      <!-- Playback Controls -->
+      <div id="playbackControls">
+          <button id="playPauseButton">Play/Pause</button>
+          <button id="stopButton">Stop</button>
+          <button id="loopButton">Toggle Loop</button>
+          <button id="nextTrackButton">Next Track</button>
+          <button id="restartTrackButton">Restart Track</button>
+      </div>
+  
+      <!-- Volume Control -->
+      <div id="volumeControl">
+          <button id="volumeUpButton">Volume Up</button>
+          <button id="volumeDownButton">Volume Down</button>
+          <button id="muteButton">Mute</button>
+          <p>Volume: <span id="volumeLevel">5</span></p>
+      </div>
+  
+      <!-- Bluetooth Button -->
+      <button id="bluetoothButton">Bluetooth</button>
+      <p>Connected Bluetooth Device: <span id="connectedDevice">N/A</span></p>
+  </div>
+  
+  <!-- Bluetooth Devices Screen -->
+  <div id="bluetoothDevicesScreen" style="display: none;">
+      <h2>Bluetooth Devices Screen</h2>
+  
+      <!-- List of Bluetooth Devices -->
+      <ul id="bluetoothDeviceList">
+          <!-- Dynamically populated device list goes here -->
+      </ul>
+  
+      <!-- Connect/Disconnect Buttons -->
+      <button id="connectButton">Connect</button>
+      <button id="disconnectButton">Disconnect</button>
+  
+      <!-- Back Button -->
+      <button id="backButton">Back to Audio Playback</button>
+  </div>
   </body>
 </html>
