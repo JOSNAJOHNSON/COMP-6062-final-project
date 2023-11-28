@@ -44,9 +44,9 @@
 /* new */
 body {
   font-family: 'Arial', sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #f0f0f0;
+  margin: 90px;
+  padding: 40px;
+  background-color:#fbf7f7;
 }
 
 .container {
@@ -59,7 +59,7 @@ body {
 }
 
 h2 {
-  color: #333;
+  color: #710606;
   text-align: center;
 }
 
@@ -77,28 +77,34 @@ h2 {
 #playbackControls,
 #volumeControl,
 #bluetoothButton {
-  margin-top: 20px;
+  margin-top: 15px;
+  padding : 15px;
   display: flex;
   justify-content: space-around;
 }
 
 button {
-  padding: 10px;
+  padding: 15px;
   cursor: pointer;
   background-color: #4caf50;
-  color: #fff;
+  color: #1e0303;
   border: none;
-  border-radius: 4px;
+  border-radius: 80px;
   flex: 1;
+  font-weight: bold;
+  margin-left: 15px;
+  margin-right: 15px;
+  display: 'block',
 }
 
 button:hover {
-  background-color: #45a049;
+  background-color: #327c36;
 }
 
-#volumeLevel {
+#volumeLevel {  
   font-weight: bold;
-  margin-left: 5px;
+  margin-left: 10px;
+  margin-right:3px;
 }
 
 #bluetoothDeviceList {

@@ -58,7 +58,7 @@ loadData();
 
 // /api/volume
 app.get('/api/volume', (req, res, next) => {
-  fsp.readFile('data1.json')
+  fsp.readFile('data.json')
     .then((data) => {
       const json = JSON.parse(data);
       res.send({ volume: json.volume });
@@ -74,7 +74,7 @@ app.put('/api/volume', (req, res) => {
     .then((data) => {
       const json = JSON.parse(data);
       json.volume = Number(req.body.volume);
-      fsp.writeFile('data1.json', JSON.stringify(json))
+      fsp.writeFile('data.json', JSON.stringify(json))
         .then(() => {
           res.send({ volume: Number(req.body.volume) });
         })
@@ -146,7 +146,7 @@ app.use(handleError);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
-});
+}); 
 
 
 

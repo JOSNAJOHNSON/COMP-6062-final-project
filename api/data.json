@@ -1,7 +1,1 @@
-{
-    "volume":5,
-    "bluetooth":{
-        "devices":"bluetooth 1"
-    }
-    
-}
+{"volume":9,"bluetooth":{"devices":"bluetooth 1"}}

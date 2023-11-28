@@ -9,13 +9,36 @@ const App = () => {
   // Sample state for the connected device
   const connectedDevice = { name: 'Bluetooth Device 1' }; // Set to null if no device is connected
 
+
 useEffect(() => {
   //http://localhost:5001 (absolute path) , api (another path)
     axios.get('/api')
       .then((response) => {
       console.log({response});
       })
-},[]);
+    
+},[]);};
+
+const AudioPlayer = () => {
+    const [volume, setVolume] = useState(0.5); // Initial volume set to 50%
+useEffect(() => {
+    // This function will be called whenever the 'volume' state changes
+    const updateVolume = () => {
+      const audioElement = document.getElementById('audioPlayer');
+      if (audioElement) {
+        audioElement.volume = volume;
+      }
+    };
+
+    // Call the updateVolume function initially to set the initial volume
+    updateVolume();
+
+    // Add an event listener for changes to the 'volume' state
+    window.addEventListener('volumechange', updateVolume);
+    return () => {
+        window.removeEventListener('volumechange', updateVolume);
+      };
+    }, [volume]);
   return (
     <>
     
@@ -33,8 +56,11 @@ useEffect(() => {
                 {/* Playback Controls */}
                 <div style={styles.controls}>
                     <button style={styles.controlButton}>Play/Pause</button>
+                    <br />
                     <button style={styles.controlButton} disabled={!isPlaying}>Stop</button>
+                    <br />
                     <button style={styles.controlButton}>{isLooping ? 'Disable Loop' : 'Enable Loop'}</button>
+                    <br />
                     <button style={styles.controlButton}>Next Track</button>
                     <button style={styles.controlButton}>Restart Track</button>
                 </div>
@@ -47,10 +73,36 @@ useEffect(() => {
                     <p style={styles.volumeLevel}>Volume: <span style={styles.volumeLevelValue}>5</span></p>
                 </div>
 
+                
+                    <audio id="audioPlayer" controls>
+                        {/* Add your audio source here */}
+                        <source src="your-audio-file.mp3" type="audio/mp3" />
+                        Your browser does not support the audio element.
+                    </audio>
+
+                    <div>
+                        <label>Volume:</label>
+                        <input
+                        type="range"
+                        min="0"
+                        max="1"
+                        step="0.01"
+                        value={volume}
+                        onChange={(e) => setVolume(parseFloat(e.target.value))}
+                        />
+                        <span>{(volume * 100).toFixed(0)}%</span>
+                    </div>
+                
                 {/* Bluetooth Button */}
                 <button style={styles.bluetoothButton} onClick={() => console.log('Bluetooth Button Clicked')}>
                     Bluetooth
                 </button>
+                {/*Connect/Disconnect Buttons*/}
+                <button id="connectButton">Connect</button>
+                <button id="disconnectButton">Disconnect</button>
+                
+                {/*Back Button */}
+                <button id="backButton">Back to Audio Playback</button>
                 <p style={styles.connectedDevice}>Connected Bluetooth Device: <span>{connectedDevice ? connectedDevice.name : 'N/A'}</span></p>
             </div>
   
@@ -96,7 +148,9 @@ const styles = {
       color: '#fff',
       border: 'none',
       borderRadius: '4px',
-      flex: '1',
+      //flex: '1',
+      display: 'block',
+      
   },
   volumeControl: {
       marginTop: '20px',
@@ -124,4 +178,6 @@ const styles = {
       color: '#4285f4',
   },
 };
+
+
 export default App;
