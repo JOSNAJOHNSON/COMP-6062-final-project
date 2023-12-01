@@ -9,52 +9,6 @@ const port = 5001
 // Middleware for parsing req bodies to JSON (req.body)
 app.use(express.json());
 
-// Load initial data from data.json
-let data;
-
-
-async function loadData() {
-  try {
-      const fileContent = await fsp.readFile('data.json', 'utf8');
-      data = JSON.parse(fileContent);
-  } catch (error) {
-      console.error('Error reading data.json:', error.message);
-      data = {
-          volume: 50,
-          bluetooth: {
-              devices: [
-                  { id: 'device1', name: 'Device 1' },
-                  { id: 'device2', name: 'Device 2' },
-                  { id: 'device3', name: 'Device 3' }
-              ],
-              connected: null
-          },
-          playlist: [
-              { id: 1, title: 'Song 1' },
-              { id: 2, title: 'Song 2' },
-              { id: 3, title: 'Song 3' },
-              { id: 4, title: 'Song 4' },
-              { id: 5, title: 'Song 5' }
-          ]
-      };
-      saveData();
-  }
-}
-
-// Save data to data.json
-async function saveData() {
-  try {
-      await fsp.writeFile('data.json', JSON.stringify(data, null, 2), 'utf8');
-  } catch (error) {
-      console.error('Error writing to data.json:', error.message);
-  }
-}
-
-// Load initial data
-loadData();
-
-
-// Endpoints 
 
 // /api/volume
 app.get('/api/volume', (req, res, next) => {

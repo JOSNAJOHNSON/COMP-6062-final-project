@@ -1,1 +1,18 @@
-{"volume":9,"bluetooth":{"devices":"bluetooth 1"}}
+{
+    "volume": 5,
+    "bluetooth": {
+        "devices": [
+            { "id":1, "name": "Device1" },
+            { "id":2, "name": "Device2" },
+            { "id":3, "name": "Device3" }
+        ],
+        "connected": null
+    },
+    "playlist": [
+        { "id": 1, "title": "Song 1"},
+        { "id": 2, "title": "Song 2"},
+        { "id": 3, "title": "Song 3"},
+        { "id": 4, "title": "Song 4"},
+        { "id": 5, "title": "Song 5"}
+    ]
+}
